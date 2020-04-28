@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+
+<head>
+
+	<title> Git commands </title>
+	
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-family: Verdana, Arial, Geneva, Arial Black;
+		}
+
+		ul {
+			font-size: 12px;
+		}
+		p {
+			font-size: 13px;
+		}
+
+	</style>
+
+</head>
+
+
+<body>
+
+	<div class="introduction">
+
+		<h1> Git commands and info </h1>
+
+		<h3> What is the difference between central and distributed VCS </h3>
+
+			<p> Git is distributed version control system whereas other systems such as SVN are central version control systems. The difference is that a central control system is located in one place, meaning that people checkout and checkin work from one place. This can be very problematic in situations where you cannot get access to that central repo such as working in an area with little connection, and means that you can only work on that most recent checkout you have done, also if something happens to that central repo, then there is no other copy of it anywhere. </p>
+
+			<p> A distributed control system, everyone has a local repository. The repo has all the info the remote repo has based from the last time they were synced. In a way, each developer has a backup of the remote repo, even if something ends up happening to it. </p>
+	</div>
+
+
+	<div class="command-line-fundamentals">
+
+		<h4> Git setup and config values </h4>
+			<ul>
+				<li> git --version </li>
+				<li> git config --global user.name "{{<i>username</i>}}" </li>
+				<li> git config --global user.email "{{<i>email</i>}}" </li>
+				<li> git config --list <strong> - (This will list all config values) </strong></li>
+				<li> git config {{<i>verb</i>}} --help <strong> - (This will take you to the instructions on any git command) </strong></li>
+			</ul>
+
+		<h3> Two common scenarios for people to start using git </h3>
+			<ul>
+				<li> Existing project on local pc to start tracking </li>
+				<li> Existing project remotely to start developing on </li>
+			</ul>
+		<br> 
+
+		<h4> Existing project on local pc to start tracking </h4>
+			<ul>
+				<li> git init <strong> - (This will initialise an empty git repository in your repo </strong></li>
+				<li> rm -rf.git <strong> - (Stop tracking project) </strong></li>
+				<li> touch .gitignore </li>
+				<li> git add -A <strong> - (or git add {{<i>filename</i>}} for specific file </strong></li>
+				<li> git status </li>
+				<li> git reset (for all) or git reset {<i>filename</i>} </li>
+				<li> git commit -m "{<i>message</i>}" </li>
+				<li> git log </li>
+			</ul>
+
+		<h4> Existing project remotely to start developing on </h4>
+			<ul>
+				<li> git clone {{url}} {{location of where to clone}}</li>
+				<li> git remote -v <strong> - (lists information on the repo) </strong></li>
+				<li> git branch -a <strong> - (lists all the branches on the repo, remotely and locally) </strong></li>
+			</ul>
+			<br>
+
+		<h4> Pushing changes directly to master </h4>
+			<ul>
+				<li> git diff </li>
+				<li> git status </li>
+				<li> git add -A or git add {{<i>filename</i>}} </li>
+				<li> git commit -m "{{<i>message</i>}}" </li>
+				<li> git pull {{<i>name of remote repo</i>}} master <strong> - (pull latest update of remote repo) </strong></li>
+				<li> git push {{<i>name of remote repo</i>}} master <strong> - (push changes to master) </strong></li>
+			</ul>
+
+		<h4> Creating branches and pushing changes </h4>
+			<ul>
+				<li> git branch {{<i>branch name</i>}} </li>
+				<li> git branch <strong> - lists all the local branches </strong></li>
+				<li> git checkout {{<i>branch name</i>}} <strong> - changes branch you are working on </strong></li>
+				<li> git status </li>
+				<li> git add -A or git add {{<i>filename</i>}} </li>
+				<li> git commit -m "{{<i>message</i>}}" </li>
+
+				<h4><strong> The following commands will be adding the branch to remote repo and pushing changes to master: </strong></h4>
+
+				<li> git push -u {{<i>name of remote repo</i>}} {{<i>name of branch</i>}}</li>
+				<li> git branch -a </li>
+				<li> git checkout master </li>
+				<li> git pull {{<i>name of remote repo</i>}} master </li>
+				<li> git branch --merged <strong> - tells you branches that have been merged so far </strong></li>
+				<li> git merge {{<i>name of branch</i>}} </li>
+				<li> git push {{<i>name of remote repo</i>}} master </li>
+			</ul>
+
+		<h4> Deleting branches </h4>
+			<ul>
+				<li> git branch --merged </li>
+				<li> git branch -d {{<i>name of branch</i>}} <strong> - Deletes branch locally.</strong></li>
+				<li> git branch -a </li>
+				<li> git push {{<i>name of remote repo</i>}} --delete {{<i>name of branch</i>}}<strong> - Deletes branch from remote repo.</strong></li>
+			</ul>
+	</div>
+
+	<div class="fixing-common-mistakes">
+		<h4> Unwanted code changes that are shown in git </h4>
+			<ul>
+				<li> Git checkout </li>
+			</ul>
+		<h4> Git commit with incorrect message/ or file</h4>
+			<ul>
+				<li> git commit --amend -m(for message) {correct message}</li>
+				<li> The above ammend, does change the hash (and thus the history). It is not recommended to do if sharing git projects with other developers as it can cause problems with their repo's</li>
+			</ul>
+			<ul>
+				<li> git commit --amend </li>
+				<li> git log --stat (will show files that have changed within commit) </li>
+				<li> also not recommended if changes will affect other developers </li>
+			</ul>
+		<h4> Committing to wrong branch - Cherrypicking </h4>
+
+		<h6> Creates a new commit based off original - without deleting it </h6>
+			<ul>
+				<li> git log (to grab the hash of commit we want) </li>
+				<li> git checkout {correct branch} </li>
+				<li> git cherry-pick {{copied hash}} </li>
+			</ul>
+		<h6> Deleting commit from incorrect branch (using 3 types of reset) </h6>
+			<ul>
+				<li> git checkout {alternate branch} </li>
+				<li> git reset --soft {{commit hash}} - will reset to commit specified but will keep changes in staging (or) </li>
+				<li> git reset {{commit hash}} - This is the default mixed reset. This will also reset and remove changes from staging area but the changes are still visibile in working directory (or) </li>
+				<li> git reset --hard {{commit hash}} - Removes and puts all tracked files but leaves to untracked files alone</li>
+			</ul>
+
+		<h4> Removing untracked files </h4>
+
+		<ul>
+			<li> git clean -d/f/df (F: gets rid of untracked files. D: Gets rid of untracked directories) </li>
+		</ul>
+
+
+		<h5> Situation: Running git reset hard on changes that are needed </h5>
+
+		<h6> This will not work if a long period of time has gone by since running reset </h6>
+			<ul>
+				<li> Git reflog (Shows commits in the order you last referenced them) </li>
+				<li> git checkout {{hash before the reset}} </li>
+				<li> git checkout {{hash}} </li>
+				<li> git log - (will show the changes that have come back but you are now in a detached headstate. To save you need to create a branch) </li>
+				<li> git branch {branch name} </li>
+				<li> git branch - (should see detached file) </li>
+				<li> git checkout {master branch} </li>
+			</ul>
+
+
+		<h4> Undoing Git changes that have been checked out by other developers </h4>
+
+		<h6> This will not delete or remove the commit but will create an additional commit that will undo the changes so that the history will remain intact.
+			<ul>
+				<li> Git revert {{Hash of file that need reverting}} </li>
+				<li> git log </li>
+			</ul>
+	</div>
+
+	<div class="using the stash command">
+		
+	</div>
+
+	<div class="diff and merge tools">
+
+	</div>
+
+
+</body>
+
+</html>
